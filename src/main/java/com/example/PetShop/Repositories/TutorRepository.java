@@ -1,4 +1,5 @@
 package com.example.PetShop.Repositories;
+
 import com.example.PetShop.Entities.Tutor;
 import org.springframework.stereotype.Repository;
 
@@ -10,13 +11,13 @@ import java.util.Map;
 @Repository
 public class TutorRepository {
 
-    private final Map<String, Tutor> tutors = new HashMap<>();
+    private static final Map<String, Tutor> tutors = new HashMap<>();
 
     public List<Tutor> getAllTutors() {
         return new ArrayList<>(tutors.values());
     }
 
-    public Tutor getTutor(String id) {
+    public static Tutor getTutor(String id) {
         return tutors.get(id);
     }
 

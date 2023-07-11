@@ -1,6 +1,7 @@
 package com.example.PetShop.Repositories;
 
 import com.example.PetShop.Entities.Pet;
+import com.example.PetShop.Entities.Tutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,8 +11,12 @@ import java.util.Map;
 
 @Repository
 public class PetRepository {
-
     private final Map<String, Pet> pets = new HashMap<>();
+    private final TutorRepository tutorRepository;
+
+    public PetRepository(TutorRepository tutorRepository) {
+        this.tutorRepository = tutorRepository;
+    }
 
     public List<Pet> getAllPets() {
         return new ArrayList<>(pets.values());
@@ -31,5 +36,11 @@ public class PetRepository {
 
     public void deletePet(String id) {
         pets.remove(id);
+    }
+
+    public void associateTutor(String petId, String tutorId) {
+        Pet pet = pets.get(petId);
+        Tutor tutor = tutorRepository.getTutor(tutorId);
+        pet.setTutor(tutor);
     }
 }
