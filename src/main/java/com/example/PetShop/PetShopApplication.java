@@ -1,6 +1,10 @@
 package com.example.PetShop;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -25,55 +29,59 @@ public class PetShopApplication {
 	// Tutor Endpoints
 
 	@GetMapping("/tutors")
-	public String getAllTutors() {
-		return "Endpoint: /tutors\nDescription: Get all tutors";
+	public List<Tutor> getAllTutors() {
+		return new ArrayList<>(tutors.values());
 	}
 
 	@GetMapping("/tutors/{id}")
-	public String getTutor(@PathVariable String id) {
-		return "Endpoint: /tutors/{id}\nDescription: Get tutor by ID";
+	public Tutor getTutor(@PathVariable String id) {
+		return tutors.get(id);
 	}
 
 	@PostMapping("/tutors")
-	public String createTutor(@RequestBody Tutor tutor) {
-		return "Endpoint: /tutors\nDescription: Create a new tutor";
+	public Tutor createTutor(@RequestBody Tutor tutor) {
+		tutors.put(tutor.getId(), tutor);
+		return tutor;
 	}
 
 	@PutMapping("/tutors/{id}")
-	public String updateTutor(@PathVariable String id, @RequestBody Tutor tutor) {
-		return "Endpoint: /tutors/{id}\nDescription: Update tutor by ID";
+	public Tutor updateTutor(@PathVariable String id, @RequestBody Tutor tutor) {
+		tutors.put(id, tutor);
+		return tutor;
 	}
 
 	@DeleteMapping("/tutors/{id}")
-	public String deleteTutor(@PathVariable String id) {
-		return "Endpoint: /tutors/{id}\nDescription: Delete tutor by ID";
+	public void deleteTutor(@PathVariable String id) {
+		tutors.remove(id);
 	}
 
 	// Pet Endpoints
 
 	@GetMapping("/pets")
-	public String getAllPets() {
-		return "Endpoint: /pets\nDescription: Get all pets";
+	public List<Pet> getAllPets() {
+		return new ArrayList<>(pets.values());
 	}
 
 	@GetMapping("/pets/{id}")
-	public String getPet(@PathVariable String id) {
-		return "Endpoint: /pets/{id}\nDescription: Get pet by ID";
+	public Pet getPet(@PathVariable String id) {
+		return pets.get(id);
 	}
 
 	@PostMapping("/pets")
-	public String createPet(@RequestBody Pet pet) {
-		return "Endpoint: /pets\nDescription: Create a new pet";
+	public Pet createPet(@RequestBody Pet pet) {
+		pets.put(pet.getId(), pet);
+		return pet;
 	}
 
 	@PutMapping("/pets/{id}")
-	public String updatePet(@PathVariable String id, @RequestBody Pet pet) {
-		return "Endpoint: /pets/{id}\nDescription: Update pet by ID";
+	public Pet updatePet(@PathVariable String id, @RequestBody Pet pet) {
+		pets.put(id, pet);
+		return pet;
 	}
 
 	@DeleteMapping("/pets/{id}")
-	public String deletePet(@PathVariable String id) {
-		return "Endpoint: /pets/{id}\nDescription: Delete pet by ID";
+	public void deletePet(@PathVariable String id) {
+		pets.remove(id);
 	}
 
 	public static void main(String[] args) {
@@ -82,16 +90,21 @@ public class PetShopApplication {
 
 }
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 class Tutor {
-	@Getter
-	@Setter
 	private String id;
 	private String name;
-}
 
+}
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 class Pet {
-	@Getter
-	@Setter
 	private String id;
 	private String name;
 
